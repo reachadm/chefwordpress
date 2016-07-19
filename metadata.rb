@@ -1,0 +1,7 @@
+name 'mywp'
+maintainer 'The Authors'
+maintainer_email 'you@example.com'
+license 'all_rights'
+description 'Installs/Configures mywp'
+long_description 'Installs/Configures mywp'
+version '0.1.0'
