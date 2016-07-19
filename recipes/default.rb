@@ -15,9 +15,6 @@ service 'httpd' do
   action [:enable, :start]
 end
 
-#cookbook_file '/etc/httpd/conf/httpd.conf' do
-#  source 'httpd.conf'
-#end
 
 package 'mariadb-server' do
   action :install
@@ -36,9 +33,6 @@ execute 'setrootpass' do
   not_if {File.exists?("/tmp/done")}
 end
 
-#execute 'installphp' do
-#  command 'yum -y install php php-mysql php-gd php-ldap php-odbc php-pear php-xml php-xmlrpc php-mbstring php-snmp php-soap curl'
-#end
 %w[ php php-mysql php-gd php-ldap php-odbc php-pear php-xml php-xmlrpc php-mbstring php-snmp php-soap curl ].each do |pkg|
   package pkg do
     action :install
@@ -48,11 +42,6 @@ end
 cookbook_file '/tmp/mysqlcommands' do
   source 'mysqlcommands'
 end
-
-#execute 'createdb' do
-#  command 'mysql -uroot -prootpassword 'create database wordpress && touch /tmp/dbdone'
-#  not_if {File.exists?("/tmp/dbdone")}
-#end
 
 execute 'database' do
   command 'mysql -uroot -prootpassword < /tmp/mysqlcommands && touch /tmp/dbdone'
@@ -73,11 +62,7 @@ execute 'unziplatest' do
   not_if {File.exists?("/var/www/html/wordpress/index.php")}
 end
 
-#directory '/var/www/html/wordpress' do
-#  owner 'apache'
-#  group 'apache'
-#  mode '0755' 
-#end
+
 
 execute 'htmldirpermissions' do
   command 'chmod -R 775 /var/www/html/wordpress'
